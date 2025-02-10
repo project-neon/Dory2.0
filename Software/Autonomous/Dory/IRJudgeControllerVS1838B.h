@@ -30,7 +30,7 @@ void checkSensorIR() {
           isRunning = false;
           velMotorL = 0;
           velMotorR = 0;
-          motorsOutput();
+          sendPWMToMotors();
         }
         break;
       // Finaliza o loop
@@ -40,7 +40,7 @@ void checkSensorIR() {
         isRunning = false;
         velMotorL = 0;
         velMotorR = 0;
-        motorsOutput();
+        sendPWMToMotors();
         break;
     }
 

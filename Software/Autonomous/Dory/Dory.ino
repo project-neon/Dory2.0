@@ -34,7 +34,7 @@ void setup() {
   // Inicia a Dory
   Serial.begin(115200);
 
-  motorsInit();
+  MotorsHBridgeDRV8833Init();
   Serial.println("Motores ON  ");
 
   IRJudgeControllerSensorInit();
@@ -51,13 +51,13 @@ void loop() {
   // Checa o sensor
   checkSensorIR();  // De acordo com o botão clicado, muda o mode
   readDistanceSensorsValues();  // Atualiza os valores da distância
-
+  
   // Roda a programação de acordo com os casos do sensor de IR
   if (isRunning) {
     simpleStrategy();
   }
 
-  motorsOutput();  // Manda as velocidades para a ponte H
+  sendPWMToMotors();  // Manda as velocidades para a ponte H
 
   distanceSensorsPrint();
   motorsPrintVel();

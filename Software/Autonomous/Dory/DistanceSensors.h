@@ -3,17 +3,19 @@
 // ---------------------------------------------//
 
 
-#include <VL53L0X.h>  // Sensores de distância
+#include <VL53L0X.h>  // Sensores de distância, Pololu 1.3.1
 #include <Wire.h>     // Auxiliar dos sensores
 
 VL53L0X sensorL;  // Sensor da esquerda
+VL53L0X sensorC;  // Sensor do centro
 VL53L0X sensorR;  // Sensor da direita
 
-VL53L0X* sensorsList[2] = { &sensorL, &sensorR };  // Lista de ponteiros com os sensores
+VL53L0X* sensorsList[3] = { &sensorL, &sensorC, &sensorR };  // Lista de ponteiros com os sensores
 
-uint8_t sensorsAddresses[2] = { 0x1, 0x2 };  // Endereços pro I2C
+uint8_t sensorsAddresses[3] = { 0x1, 0x2, 0x3 };  // Endereços pro I2C
 
 int distL;  // Valor lido pelo sensor da esquerda
+int distC;  // Valor lido pelo sensor da frente
 int distR;  // Valor lido pelo sensor da direita
 
 // ---------------------------------------------//
@@ -69,11 +71,11 @@ void readDistanceSensors0A41SK0FValues() {
 
 void distanceSensorVL53L0XInit() {
 
-  // Wire.begin();  // Inicia o I2C
-  // Wire.setClock(400000); //TODO: iniciar o Wire em uma funcao separada no setup do codigo
+  Wire.begin();  // Inicia o I2C
+  Wire.setClock(400000); //TODO: iniciar o Wire em uma funcao separada no setup do codigo
 
   // Desliga todos os sensores
-  for (int i = 0; i < 2; i++) {
+  for (int i = 0; i < 3; i++) {
     pinMode(VL53LOX_XSHUT_LIST_PINS[i], OUTPUT);
     digitalWrite(VL53LOX_XSHUT_LIST_PINS[i], LOW);
   }
@@ -81,7 +83,7 @@ void distanceSensorVL53L0XInit() {
   delay(10);
 
   //Endereça todos os sensores
-  for (int i = 0; i < 2; i++) {
+  for (int i = 0; i < 3; i++) {
     pinMode(VL53LOX_XSHUT_LIST_PINS[i], INPUT); // XSHUT volta pra HIGH
     sensorsList[i]->init(); // Inicia o sensor usando a função da lib
     sensorsList[i]->setAddress(sensorsAddresses[i]); // Endereça o sensor
@@ -94,6 +96,7 @@ void distanceSensorVL53L0XInit() {
 void readDistanceSensorsVL53L0XValues() {
   // Armazena os valores lidos nos sensores
   distL = sensorL.readRangeContinuousMillimeters();
+  //distC = sensorC.readRangeContinuousMillimeters(); //Atualmente, não usamos
   distR = sensorR.readRangeContinuousMillimeters();
 }
 
