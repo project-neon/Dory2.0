@@ -1,3 +1,9 @@
+//Board esp32 1.0.4
+#ifndef LED_BUILTIN
+#define LED_BUILTIN 2
+#endif
+
+
 // Motores da Esquerda e da direita
 #define MOTOR_RIGHT_IN1_PIN 14 // Também é o pino da ESC1
 #define MOTOR_RIGHT_IN2_PIN 27 // Também é o pino da ESC2

@@ -18,17 +18,16 @@ void simpleStrategy() {
     velMotorR = velMaxR;
     Serial.print("ATACANDO \t\t");
   } else if (distanceCenterLeft >= minimumDistanceSharp || distanceCenterRight >= minimumDistanceSharp) {  // Procurando o inimigo
-    velMotorL = (distanceCenterLeft >= minimumDistanceSharp) ? velMaxR * 0.7 : velMaxL;           // Achei na esquerda
-    velMotorR = (distanceCenterLeft >= minimumDistanceSharp) ? velMaxR : velMaxL * 0.7;           // Achei na direita
+    velMotorL = (distanceCenterLeft >= minimumDistanceSharp) ? velMaxR * 0.7 : velMaxL;                    // Achei na esquerda
+    velMotorR = (distanceCenterLeft >= minimumDistanceSharp) ? velMaxR : velMaxL * 0.7;                    // Achei na direita
     enemyLastTimeSeenLeft = (distanceCenterLeft >= minimumDistanceSharp) ? 0 : 1;
     (distanceCenterLeft >= minimumDistanceSharp) ? Serial.print("ESQ \t\t") : Serial.print("DIR \t\t");
-  } else {                                                   // Quando perco o inimigo, duas opções dado a última leitura do sensor:
+  } else {                                                                      // Quando perco o inimigo, duas opções dado a última leitura do sensor:
     velMotorL = (enemyLastTimeSeenLeft == 0) ? -velMaxR * 0.4 : velMaxL * 0.4;  // Gira pra esquerda ou
     velMotorR = (enemyLastTimeSeenLeft == 0) ? velMaxR * 0.4 : -velMaxL * 0.4;  // Gira pra direita
     (enemyLastTimeSeenLeft == 0) ? Serial.print("PROCURANDO ESQ \t\t") : Serial.print("PROCURANDO DIR \t\t");
   }
-
-} 
+}
 
 void setup() {
   // Inicia a Dory
@@ -49,9 +48,9 @@ void setup() {
 
 void loop() {
   // Checa o sensor
-  checkSensorIR();  // De acordo com o botão clicado, muda o mode
+  checkSensorIR();              // De acordo com o botão clicado, muda o mode
   readDistanceSensorsValues();  // Atualiza os valores da distância
-  
+
   // Roda a programação de acordo com os casos do sensor de IR
   if (isRunning) {
     simpleStrategy();

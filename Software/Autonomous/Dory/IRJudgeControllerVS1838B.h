@@ -4,7 +4,6 @@
 bool isRunning = false;
 
 void IRJudgeControllerSensorInit() {
-  pinMode(LED_BUILTIN, INPUT);
   IrReceiver.begin(JUDGE_CONTROLLER_PIN, ENABLE_LED_FEEDBACK); // Inicializa teste do led e sensor do IR
 }
 
